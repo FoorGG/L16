@@ -2,6 +2,3 @@
 package:
   name:
     - apt-transport-https
-    - wget
-    - gnupg
-    - filebeat
