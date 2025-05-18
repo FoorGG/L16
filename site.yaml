@@ -1,0 +1,8 @@
+---
+- name: Installing Base Packages
+  hosts: all
+  become: yes
+  roles:
+    - common
+
+# - name: Configuring PAM
