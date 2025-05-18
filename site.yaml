@@ -5,4 +5,10 @@
   roles:
     - common
 
+- name: Configuring WEB SRV
+  hosts: WEB_SRV
+  become: yes
+  roles:
+    - WEB_SRV_INSTALL
+
 # - name: Configuring PAM

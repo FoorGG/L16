@@ -1,2 +1,5 @@
 ---
-# handlers file for roles/common
+- name: RESTART NGINX
+  service:
+    name: nginx
+    state: restarted
