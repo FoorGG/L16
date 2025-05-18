@@ -1,2 +1,5 @@
 ---
-# handlers file for roles/WEB_SRV_INSTALL
+- name: RESTART NGINX
+  service:
+    name: nginx
+    state: restarted
