@@ -1,6 +1,6 @@
 ---
 - name: INSTALLING BASE PACKAGES
   apt:
-    name: {{ package.name }}
+    name: "{{ package.name }}"
     state: present
     update_cache: yes
