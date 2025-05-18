@@ -1,4 +1,7 @@
 ---
 package:
   name:
-    - nginx
+    - apt-transport-https
+    - wget
+    - gnupg
+    - filebeat
