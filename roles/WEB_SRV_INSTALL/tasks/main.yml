@@ -6,18 +6,18 @@
     update_cache: yes
   notify: RESTART NGINX
 
-- name: Download and add GPG key from mirror.example.ru
-  ansible.builtin.get_url:
-    url: "https://mirror.example.ru/public.key"
-    dest: "/usr/share/keyrings/mirror-example-ru.gpg"
-    mode: '0644'
+#- name: Download and add GPG key from mirror.example.ru
+#  ansible.builtin.get_url:
+#    url: "https://mirror.example.ru/public.key"
+#    dest: "/usr/share/keyrings/mirror-example-ru.gpg"
+#    mode: '0644'
 
 
-- name: Add Elastic repository
+- name: Add Elastic repository from Yandex mirror
   apt_repository:
-    repo: "deb https://mirror.example.ru/elastic/8.x/apt stable main"
-    state: present
+    repo: "deb https://mirror.yandex.ru/mirrors/elastic/8.x/apt stable main"
     filename: elastic-8.x
+    state: present
 
 - name: Update apt cache
   apt:
