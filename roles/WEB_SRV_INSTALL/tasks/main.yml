@@ -15,7 +15,7 @@
 
 - name: Add Elastic repository from Yandex mirror
   apt_repository:
-    repo: "deb https://mirror.yandex.ru/mirrors/elastic/8.x/apt stable main"
+    repo: "deb https://mirror.yandex.ru/mirrors/elastic/8 stable main"
     filename: elastic-8.x
     state: present
 
