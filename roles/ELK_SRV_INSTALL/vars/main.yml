@@ -1,0 +1,7 @@
+---
+package:
+  name:
+    - filebeat
+    - elasticsearch
+    - logstash
+    - kibana

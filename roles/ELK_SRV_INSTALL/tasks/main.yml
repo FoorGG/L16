@@ -1,0 +1,22 @@
+---
+- name: Install Java Runtime Environment (OpenJDK)
+  apt:
+    name: default-jre
+    state: present
+    update_cache: yes
+
+- name: Add Elastic repository from Yandex mirror (trusted)
+  apt_repository:
+    repo: "deb [trusted=yes] https://mirror.yandex.ru/mirrors/elastic/8/ stable main"
+    filename: elastic-8.x
+    state: present
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: INSTALLING BASE PACKAGES
+  apt:
+    name: "{{ package.name }}"
+    state: present
+    update_cache: yes

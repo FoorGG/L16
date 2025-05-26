@@ -11,4 +11,8 @@
   roles:
     - WEB_SRV_INSTALL
 
-# - name: Configuring PAM
+- name: Configuring ELK SRV
+  hosts: ELK_SRV
+  become: yes
+  roles:
+    - ELK_SRV_INSTALL
