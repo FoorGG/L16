@@ -3,7 +3,6 @@
   user:
     name: elastic
     password: "{{ logstash.elasticsearch.password_plain | password_hash('sha512') }}"
-  when: "'elasticsearch' in group_names"
 
 - name: Deploy Elasticsearch configuration
   template:
@@ -13,7 +12,6 @@
     group: elasticsearch
     mode: '0644'
   notify: Restart Elasticsearch
-  when: "'elasticsearch' in group_names"
 
 - name: Create directory for Logstash certificates
   file:
@@ -22,7 +20,6 @@
     owner: logstash
     group: logstash
     mode: '0755'
-  when: "'logstash' in group_names"
 
 - name: Copy Elasticsearch CA certificate to Logstash
   copy:
@@ -31,7 +28,6 @@
     owner: logstash
     group: logstash
     mode: '0644'
-  when: "'logstash' in group_names"
 
 - name: Deploy Logstash Elasticsearch output configuration
   template:
@@ -41,4 +37,3 @@
     group: logstash
     mode: '0644'
   notify: Restart Logstash
-  when: "'logstash' in group_names"
