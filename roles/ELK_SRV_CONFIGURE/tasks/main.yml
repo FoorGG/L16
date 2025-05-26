@@ -2,7 +2,7 @@
 - name: Set password for elastic user with hashed password
   user:
     name: elastic
-    password: "{{ logstash.elasticsearch.password_plain | password_hash('sha512') }}"
+    password: "{{ logstash.elasticsearch.password | password_hash('sha512') }}"
 
 - name: Deploy Elasticsearch configuration
   template:
