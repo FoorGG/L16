@@ -2,4 +2,4 @@
 package:
   name:
     - apt-transport-https
-#    - filebeat
+    - filebeat
