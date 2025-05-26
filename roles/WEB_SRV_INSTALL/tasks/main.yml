@@ -8,8 +8,8 @@
 
 - name: Download and add GPG key from mirror.example.ru
   ansible.builtin.get_url:
-    url: https://mirror.example.ru/public.key
-    dest: /usr/share/keyrings/mirror-example-ru.gpg
+    url: "https://mirror.example.ru/public.key"
+    dest: "/usr/share/keyrings/mirror-example-ru.gpg"
     mode: '0644'
 
 
