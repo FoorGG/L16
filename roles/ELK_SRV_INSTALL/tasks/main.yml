@@ -21,3 +21,9 @@
     state: present
     update_cache: yes
 
+- name: ENABLE SERVICES
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  loop: "{{ package.name }}"
