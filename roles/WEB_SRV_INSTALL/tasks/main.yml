@@ -6,12 +6,10 @@
     update_cache: yes
   notify: RESTART NGINX
 
-#- name: Download and add GPG key from mirror.example.ru
-#  ansible.builtin.get_url:
-#    url: "https://mirror.example.ru/public.key"
-#    dest: "/usr/share/keyrings/mirror-example-ru.gpg"
-#    mode: '0644'
-
+- name: Add Elastic GPG key
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    state: present
 
 - name: Add Elastic repository from Yandex mirror
   apt_repository:
