@@ -1,0 +1,44 @@
+---
+- name: Set password for elastic user with hashed password
+  user:
+    name: elastic
+    password: "{{ logstash.elasticsearch.password_plain | password_hash('sha512') }}"
+  when: "'elasticsearch' in group_names"
+
+- name: Deploy Elasticsearch configuration
+  template:
+    src: elasticsearch.yml.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
+    owner: elasticsearch
+    group: elasticsearch
+    mode: '0644'
+  notify: Restart Elasticsearch
+  when: "'elasticsearch' in group_names"
+
+- name: Create directory for Logstash certificates
+  file:
+    path: "{{ move.crt.dst | dirname }}"
+    state: directory
+    owner: logstash
+    group: logstash
+    mode: '0755'
+  when: "'logstash' in group_names"
+
+- name: Copy Elasticsearch CA certificate to Logstash
+  copy:
+    src: "{{ move.crt.src }}"
+    dest: "{{ move.crt.dst }}"
+    owner: logstash
+    group: logstash
+    mode: '0644'
+  when: "'logstash' in group_names"
+
+- name: Deploy Logstash Elasticsearch output configuration
+  template:
+    src: logstash.conf.j2
+    dest: /etc/logstash/conf.d/main.conf
+    owner: logstash
+    group: logstash
+    mode: '0644'
+  notify: Restart Logstash
+  when: "'logstash' in group_names"

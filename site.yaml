@@ -5,14 +5,20 @@
   roles:
     - common
 
-- name: Configuring WEB SRV
+- name: INSTALLING WEB SRV
   hosts: WEB_SRV
   become: yes
   roles:
     - WEB_SRV_INSTALL
 
-- name: Configuring ELK SRV
+- name: INSTALLING ELK SRV
   hosts: ELK_SRV
   become: yes
   roles:
     - ELK_SRV_INSTALL
+
+- name: Configuring ELK
+  hosts: ELK_SRV
+  become: yes
+  roles:
+    - ELK_SRV_CONFIGURE
