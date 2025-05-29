@@ -45,5 +45,5 @@ j2:
           path: "/etc/logstash/certs/http_ca.crt"
 move:
   crt:
-    src: "files/http_ca.crt"
-    dst: "/etc/logstash/certs/http_ca.crt"
+    src: "/etc/logstash/certs/http_ca.crt"
+    dst: "files/http_ca.crt"
