@@ -28,6 +28,7 @@
     owner: logstash
     group: logstash
     mode: '0644'
+    remote_src: yes
 
 - name: Deploy Logstash Elasticsearch output configuration
   template:
