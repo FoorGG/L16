@@ -6,6 +6,7 @@ elasticsearch_http_ca_crt: http_ca.crt
 logstash_certs_path: /etc/logstash/certs
 logstash_http_ca_crt: http_ca.crt
 kibana_certs_path: /etc/kibana/certs
+kibana_http_ca_crt: http_ca.crt
 beats_certs_path: /etc/filebeat/certs
 
 file_owner: root
