@@ -21,16 +21,16 @@ elasticsearch_password: "changeme_elastic_password"
 logstash_user: logstash_writer
 logstash_password: "changeme_logstash_password"
 logstash_elasticsearch_hosts:
-  - "https://192.168.88.12:9200"
+  - "https://192.168.88.18:9200"
 
 kibana_user: kibana_system
 kibana_password: "changeme_kibana_password"
 kibana_elasticsearch_hosts:
-  - "https://192.168.88.12:9200"
+  - "https://192.168.88.18:9200"
 
 beats_http_ca_crt: http_ca.crt
 beats_elasticsearch_hosts:
-  - "https://192.168.88.12:9200"
+  - "https://192.168.88.18:9200"
 beats_logstash_hosts:
   - "192.168.88.12:5044"
 beats_user: filebeat_writer
