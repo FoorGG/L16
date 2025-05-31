@@ -23,9 +23,10 @@ kibana_password: "changeme_kibana_password"
 kibana_elasticsearch_hosts:
   - "https://192.168.88.12:9200"
 
-beats_user: filebeat_writer
-beats_password: "changeme_filebeat_password"
+beats_http_ca_crt: http_ca.crt
 beats_elasticsearch_hosts:
   - "https://192.168.88.12:9200"
 beats_logstash_hosts:
   - "192.168.88.12:5044"
+beats_user: filebeat_writer
+beats_password: "changeme_filebeat_password"
