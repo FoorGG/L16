@@ -4,16 +4,16 @@ input {
   beats {
     port => 5044
     ssl => true
-    ssl_certificate_authorities => ["{{ logstash.certs_path }}/{{ logstash.ca_cert }}"]
+    ssl_certificate_authorities => ["{{ logstash_certs_path }}/{{ logstash_http_ca_crt }}"]
   }
 }
 
 output {
   elasticsearch {
-    hosts => {{ logstash.elasticsearch_hosts }}
-    user => "{{ logstash.user }}"
-    password => "{{ logstash.password }}"
-    cacert => "{{ logstash.certs_path }}/{{ logstash.ca_cert }}"
+    hosts => {{ logstash_elasticsearch_hosts }}
+    user => "{{ logstash_user }}"
+    password => "{{ logstash_password }}"
+    cacert => "{{ logstash_certs_path }}/{{ logstash_http_ca_crt }}"
     ssl => true
   }
 }
