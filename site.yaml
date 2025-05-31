@@ -18,7 +18,7 @@
     - ELK_SRV_INSTALL
 
 - name: Configuring ELK
-  hosts: ELK_SRV
+  hosts: all
   become: yes
   roles:
     - ELK_SRV_CONFIGURE

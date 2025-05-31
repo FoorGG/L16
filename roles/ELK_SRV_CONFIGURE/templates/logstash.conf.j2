@@ -2,22 +2,18 @@
 
 input {
   beats {
-    port => {{ j2.templates.logstash.beats.port }}
-    ssl => {{ j2.templates.logstash.beats.ssl.enabled | lower }}
-    {% if j2.templates.logstash.beats.ssl.enabled %}
-    ssl_certificate => "{{ j2.templates.logstash.beats.ssl.certificate }}"
-    ssl_key => "{{ j2.templates.logstash.beats.ssl.key }}"
-    {% endif %}
+    port => 5044
+    ssl => true
+    ssl_certificate_authorities => ["{{ logstash.certs_path }}/{{ logstash.ca_cert }}"]
   }
 }
 
 output {
   elasticsearch {
-    hosts => ["https://{{ j2.templates.logstash.elasticsearch.http.host }}:{{ j2.templates.logstash.elasticsearch.http.port }}"]
-    user => "{{ j2.templates.logstash.elasticsearch.user }}"
-    password => "{{ j2.templates.logstash.elasticsearch.password }}"
-    ssl => {{ j2.templates.logstash.ssl.enabled | lower }}
-    cacert => "{{ j2.templates.logstash.ssl.cacert.path }}"
-    index => "logs-%{+YYYY.MM.dd}"
+    hosts => {{ logstash.elasticsearch_hosts }}
+    user => "{{ logstash.user }}"
+    password => "{{ logstash.password }}"
+    cacert => "{{ logstash.certs_path }}/{{ logstash.ca_cert }}"
+    ssl => true
   }
 }

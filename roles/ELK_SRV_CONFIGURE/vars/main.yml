@@ -1,49 +1,35 @@
 ---
-j2:
-  templates:
-    elasticsearch:
-      path:
-        data: "/var/lib/elasticsearch"
-        logs: "/var/log/elasticsearch"
-      xpack:
-        security_enabled: true
-        enrollment_enabled: true
-        http:
-          ssl:
-            enabled: true
-            keystore_path: "certs/http.p12"
-        transport:
-          ssl:
-            enabled: true
-            keystore_path: "certs/transport.p12"
-            truststore_path: "certs/transport.p12"
-          verification:
-            mode: "certificate"
-      cluster:
-        initial:
-          master:
-            nodes:
-              - "ELK"
-      http:
-        host: "127.0.0.1"
-    logstash:
-      beats:
-        port: 5044
-        ssl:
-          enabled: true
-          certificate: "/test/cert.crt"
-          key: "/test/cert.key"
-      elasticsearch:
-        http:
-          port: 9200
-          host: "127.0.0.1"
-        user: "elastic"
-        password: "asuw2vjIXgpbfAsay78?En7aXg#GwVf9b67xtdyEVlZbmFlP"
-      ssl:
-        enabled: true
-        cacert:
-          path: "/etc/logstash/certs/http_ca.crt"
-move:
-  crt:
-    src: "/etc/elasticsearch/certs/http_ca.crt"
-    dst: "files/http_ca.crt"
+elasticsearch_certs_path: /etc/elasticsearch/certs
+elasticsearch_http_p12: http.p12
+elasticsearch_transport_p12: transport.p12
+elasticsearch_http_ca_crt: http_ca.crt
+elasticsearch_user: elastic
+elasticsearch_password: "changeme_elastic_password"
+
+logstash_certs_path: /etc/logstash/certs
+logstash_http_ca_crt: http_ca.crt
+logstash_user: logstash_writer
+logstash_password: "changeme_logstash_password"
+logstash_elasticsearch_hosts:
+  - "https://192.168.88.12:9200"
+
+kibana_certs_path: /etc/kibana/certs
+kibana_http_ca_crt: http_ca.crt
+kibana_elasticsearch_hosts:
+  - "https://192.168.88.12:9200"
+kibana_user: kibana_system
+kibana_password: "changeme_kibana_password"
+
+beats_certs_path: /etc/filebeat/certs
+beats_http_ca_crt: http_ca.crt
+beats_elasticsearch_hosts:
+  - "https://192.168.88.12:9200"
+beats_logstash_hosts:
+  - "192.168.88.12:5044"
+beats_user: filebeat_writer
+beats_password: "changeme_filebeat_password"
+
+file_owner: root
+file_group: root
+file_mode_cert: '0644'
+file_mode_key: '0640'
