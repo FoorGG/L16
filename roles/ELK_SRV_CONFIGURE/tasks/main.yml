@@ -1,5 +1,5 @@
 ---
-- name: Создать пользователей для ELK
+- name: Создать пользователей ELK (если ещё не созданы)
   user:
     name: "{{ item }}"
     system: yes
@@ -24,7 +24,7 @@
 
 - name: Копировать сертификаты в Elasticsearch
   copy:
-    src: "{{ item.src }}"
+    src: "certs/{{ item.src }}"
     dest: "{{ elasticsearch_certs_path }}/{{ item.dest }}"
     owner: elasticsearch
     group: elasticsearch
@@ -43,9 +43,9 @@
     mode: '0644'
   notify: restart elasticsearch
 
-- name: Копировать CA сертификат в Logstash
+- name: Копировать CA сертификат для Logstash
   copy:
-    src: http_ca.crt
+    src: "certs/http_ca.crt"
     dest: "{{ logstash_certs_path }}/http_ca.crt"
     owner: logstash
     group: logstash
@@ -60,9 +60,9 @@
     mode: '0644'
   notify: restart logstash
 
-- name: Копировать CA сертификат в Kibana
+- name: Копировать CA сертификат для Kibana
   copy:
-    src: http_ca.crt
+    src: "certs/http_ca.crt"
     dest: "{{ kibana_certs_path }}/http_ca.crt"
     owner: kibana
     group: kibana
@@ -84,9 +84,18 @@
     update_cache: yes
   when: "'WEB_SRV' in group_names"
 
+- name: Создать директорию для сертификатов Filebeat
+  file:
+    path: "{{ beats_certs_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  when: "'WEB_SRV' in group_names"
+
 - name: Копировать CA сертификат для Filebeat
   copy:
-    src: http_ca.crt
+    src: "certs/http_ca.crt"
     dest: "{{ beats_certs_path }}/http_ca.crt"
     owner: root
     group: root
