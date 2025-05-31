@@ -1,4 +1,14 @@
 ---
+- name: Создать пользователей для ELK
+  user:
+    name: "{{ item }}"
+    system: yes
+    shell: /usr/sbin/nologin
+  loop:
+    - elasticsearch
+    - logstash
+    - kibana
+
 - name: Создать директории для сертификатов
   file:
     path: "{{ item.path }}"
