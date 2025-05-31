@@ -6,10 +6,11 @@
     update_cache: yes
   notify: RESTART NGINX
 
-- name: Add Elastic GPG key
+- name: Add Elastic GPG key from Yandex mirror
   apt_key:
-    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    url: https://mirror.yandex.ru/mirrors/elasticstack/GPG-KEY-elasticsearch
     state: present
+
 
 - name: Add Elastic repository from Yandex mirror
   apt_repository:
