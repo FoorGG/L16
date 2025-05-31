@@ -4,6 +4,7 @@ elasticsearch_http_p12: http.p12
 elasticsearch_transport_p12: transport.p12
 elasticsearch_http_ca_crt: http_ca.crt
 logstash_certs_path: /etc/logstash/certs
+logstash_http_ca_crt: http_ca.crt
 kibana_certs_path: /etc/kibana/certs
 beats_certs_path: /etc/filebeat/certs
 
