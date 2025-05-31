@@ -34,6 +34,7 @@
     - { src: "http.p12", dest: "http.p12" }
     - { src: "transport.p12", dest: "transport.p12" }
 
+
 - name: Настроить elasticsearch.yml
   template:
     src: elasticsearch.yml.j2
