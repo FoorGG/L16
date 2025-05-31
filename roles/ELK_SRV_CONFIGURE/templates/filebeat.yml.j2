@@ -8,5 +8,5 @@ filebeat.inputs:
 
 output.logstash:
   hosts: {{ beats_logstash_hosts }}
-  ssl.certificate_authorities: ["{{ beats.certs_path }}/{{ beats.ca_cert }}"]
+  ssl.certificate_authorities: ["{{ beats_certs_path }}/{{ beats_http_ca_crt }}"]
   ssl.enabled: true
