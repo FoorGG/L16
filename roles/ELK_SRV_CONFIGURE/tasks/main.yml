@@ -1,90 +1,67 @@
 ---
-- name: Создать директорию для сертификатов Elasticsearch
+- name: Создать директории для сертификатов
   file:
-    path: "{{ elasticsearch_certs_path }}"
+    path: "{{ item.path }}"
     state: directory
-    owner: elasticsearch
-    group: elasticsearch
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
     mode: '0755'
+  loop:
+    - { path: "{{ elasticsearch.certs_path }}", owner: "elasticsearch", group: "elasticsearch" }
+    - { path: "{{ logstash.certs_path }}", owner: "logstash", group: "logstash" }
+    - { path: "{{ kibana.certs_path }}", owner: "kibana", group: "kibana" }
+    - { path: "{{ beats.certs_path }}", owner: "root", group: "root" }
 
-- name: Копировать http.p12 в Elasticsearch
+- name: Копировать сертификаты в Elasticsearch
   copy:
-    src: "http.p12"
-    dest: "{{ elasticsearch_certs_path }}/{{ elasticsearch_http_p12 }}"
+    src: "{{ item.src }}"
+    dest: "{{ elasticsearch.certs_path }}/{{ item.dest }}"
     owner: elasticsearch
     group: elasticsearch
     mode: "{{ file_mode_cert }}"
-
-- name: Копировать transport.p12 в Elasticsearch
-  copy:
-    src: "transport.p12"
-    dest: "{{ elasticsearch_certs_path }}/{{ elasticsearch_transport_p12 }}"
-    owner: elasticsearch
-    group: elasticsearch
-    mode: "{{ file_mode_cert }}"
-
-- name: Копировать http_ca.crt в Elasticsearch
-  copy:
-    src: "http_ca.crt"
-    dest: "{{ elasticsearch_certs_path }}/{{ elasticsearch_http_ca_crt }}"
-    owner: elasticsearch
-    group: elasticsearch
-    mode: "{{ file_mode_cert }}"
+  loop:
+    - { src: "http_ca.crt", dest: "http_ca.crt" }
+    - { src: "http.p12", dest: "http.p12" }
+    - { src: "transport.p12", dest: "transport.p12" }
 
 - name: Настроить elasticsearch.yml
   template:
-    src: "elasticsearch.yml.j2"
-    dest: "/etc/elasticsearch/elasticsearch.yml"
+    src: elasticsearch.yml.j2
+    dest: /etc/elasticsearch/elasticsearch.yml
     owner: elasticsearch
     group: elasticsearch
     mode: '0644'
   notify: restart elasticsearch
 
-- name: Создать директорию для сертификатов Logstash
-  file:
-    path: "{{ logstash_certs_path }}"
-    state: directory
-    owner: logstash
-    group: logstash
-    mode: '0755'
-
-- name: Копировать http_ca.crt в Logstash
+- name: Копировать CA сертификат в Logstash
   copy:
-    src: "http_ca.crt"
-    dest: "{{ logstash_certs_path }}/{{ logstash_http_ca_crt }}"
+    src: http_ca.crt
+    dest: "{{ logstash.certs_path }}/http_ca.crt"
     owner: logstash
     group: logstash
     mode: "{{ file_mode_cert }}"
 
 - name: Настроить конфигурацию Logstash
   template:
-    src: "logstash.conf.j2"
-    dest: "/etc/logstash/conf.d/logstash.conf"
+    src: logstash.conf.j2
+    dest: /etc/logstash/conf.d/logstash.conf
     owner: logstash
     group: logstash
     mode: '0644'
   notify: restart logstash
 
-- name: Создать директорию для сертификатов Kibana
-  file:
-    path: "{{ kibana_certs_path }}"
-    state: directory
-    owner: kibana
-    group: kibana
-    mode: '0755'
-
-- name: Копировать http_ca.crt в Kibana
+- name: Копировать CA сертификат в Kibana
   copy:
-    src: "http_ca.crt"
-    dest: "{{ kibana_certs_path }}/{{ kibana_http_ca_crt }}"
+    src: http_ca.crt
+    dest: "{{ kibana.certs_path }}/http_ca.crt"
     owner: kibana
     group: kibana
     mode: "{{ file_mode_cert }}"
 
 - name: Настроить kibana.yml
   template:
-    src: "kibana.yml.j2"
-    dest: "/etc/kibana/kibana.yml"
+    src: kibana.yml.j2
+    dest: /etc/kibana/kibana.yml
     owner: kibana
     group: kibana
     mode: '0644'
@@ -97,28 +74,19 @@
     update_cache: yes
   when: "'WEB_SRV' in group_names"
 
-- name: Создать директорию для сертификатов Filebeat
-  file:
-    path: "{{ beats_certs_path }}"
-    state: directory
-    owner: root
-    group: root
-    mode: '0755'
-  when: "'WEB_SRV' in group_names"
-
-- name: Копировать http_ca.crt для Filebeat
+- name: Копировать CA сертификат для Filebeat
   copy:
-    src: "http_ca.crt"
-    dest: "{{ beats_certs_path }}/{{ beats_http_ca_crt }}"
+    src: http_ca.crt
+    dest: "{{ beats.certs_path }}/http_ca.crt"
     owner: root
     group: root
     mode: "{{ file_mode_cert }}"
-  when: "'WEB_SRV' in group_names"
+  when: "'WEB_SRV in group_names"
 
 - name: Настроить filebeat.yml
   template:
-    src: "filebeat.yml.j2"
-    dest: "/etc/filebeat/filebeat.yml"
+    src: filebeat.yml.j2
+    dest: /etc/filebeat/filebeat.yml
     owner: root
     group: root
     mode: '0644'
