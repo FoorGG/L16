@@ -7,15 +7,15 @@
     group: "{{ item.group }}"
     mode: '0755'
   loop:
-    - { path: "{{ elasticsearch.certs_path }}", owner: "elasticsearch", group: "elasticsearch" }
-    - { path: "{{ logstash.certs_path }}", owner: "logstash", group: "logstash" }
-    - { path: "{{ kibana.certs_path }}", owner: "kibana", group: "kibana" }
-    - { path: "{{ beats.certs_path }}", owner: "root", group: "root" }
+    - { path: "{{ elasticsearch_certs_path }}", owner: "elasticsearch", group: "elasticsearch" }
+    - { path: "{{ logstash_certs_path }}", owner: "logstash", group: "logstash" }
+    - { path: "{{ kibana_certs_path }}", owner: "kibana", group: "kibana" }
+    - { path: "{{ beats_certs_path }}", owner: "root", group: "root" }
 
 - name: Копировать сертификаты в Elasticsearch
   copy:
     src: "{{ item.src }}"
-    dest: "{{ elasticsearch.certs_path }}/{{ item.dest }}"
+    dest: "{{ elasticsearch_certs_path }}/{{ item.dest }}"
     owner: elasticsearch
     group: elasticsearch
     mode: "{{ file_mode_cert }}"
@@ -36,7 +36,7 @@
 - name: Копировать CA сертификат в Logstash
   copy:
     src: http_ca.crt
-    dest: "{{ logstash.certs_path }}/http_ca.crt"
+    dest: "{{ logstash_certs_path }}/http_ca.crt"
     owner: logstash
     group: logstash
     mode: "{{ file_mode_cert }}"
@@ -53,7 +53,7 @@
 - name: Копировать CA сертификат в Kibana
   copy:
     src: http_ca.crt
-    dest: "{{ kibana.certs_path }}/http_ca.crt"
+    dest: "{{ kibana_certs_path }}/http_ca.crt"
     owner: kibana
     group: kibana
     mode: "{{ file_mode_cert }}"
@@ -77,11 +77,11 @@
 - name: Копировать CA сертификат для Filebeat
   copy:
     src: http_ca.crt
-    dest: "{{ beats.certs_path }}/http_ca.crt"
+    dest: "{{ beats_certs_path }}/http_ca.crt"
     owner: root
     group: root
     mode: "{{ file_mode_cert }}"
-  when: "'WEB_SRV in group_names"
+  when: "'WEB_SRV' in group_names"
 
 - name: Настроить filebeat.yml
   template:
